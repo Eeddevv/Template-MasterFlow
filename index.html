@@ -1407,6 +1407,8 @@
     function initMobileBookingButton() {
       const mobileBookingBtn = document.getElementById('mobileBookingBtn');
       const header = document.getElementById('header');
+      const heroSection = document.getElementById('hero');
+      let isButtonVisible = false; // Состояние кнопки
 
       // Функция для показа/скрытия кнопки
       function toggleMobileBookingButton() {
@@ -1414,28 +1416,46 @@
         const headerHeight = header.offsetHeight;
         const btnHeight = 52; // Высота кнопки
 
+        // Рассчитываем высоту первого блока (hero)
+        const heroHeight = heroSection.offsetHeight;
+        const heroBottom = heroSection.offsetTop + heroHeight;
+        const triggerPoint = heroBottom - headerHeight;
+
         // Обновляем позицию кнопки под шапкой
         mobileBookingBtn.style.top = headerHeight + 'px';
 
-        if (scrollY > 50) { // Показываем после небольшого скролла
+        // Гистерезис: разные пороги для появления и исчезновения
+        const showThreshold = triggerPoint;
+        const hideThreshold = triggerPoint - 50; // На 50px выше для предотвращения дрожания
+
+        if (!isButtonVisible && scrollY > showThreshold) {
+          // Показываем кнопку
+          isButtonVisible = true;
           mobileBookingBtn.classList.add('visible');
-          document.body.classList.add('has-mobile-booking');
-          // Динамически рассчитываем отступ
-          document.body.style.setProperty('--mobile-booking-offset', (headerHeight + btnHeight) + 'px');
-        } else {
+          // Убираем динамический отступ body чтобы избежать дрожания
+          // document.body.classList.add('has-mobile-booking');
+        } else if (isButtonVisible && scrollY < hideThreshold) {
+          // Скрываем кнопку
+          isButtonVisible = false;
           mobileBookingBtn.classList.remove('visible');
-          document.body.classList.remove('has-mobile-booking');
-          document.body.style.removeProperty('--mobile-booking-offset');
+          // document.body.classList.remove('has-mobile-booking');
         }
       }
 
       // Проверяем при загрузке страницы
       toggleMobileBookingButton();
 
-      // Слушаем скролл
-      window.addEventListener('scroll', toggleMobileBookingButton);
+      // Слушаем скролл с debounce для плавности
+      let ticking = false;
+      function requestTick() {
+        if (!ticking) {
+          requestAnimationFrame(toggleMobileBookingButton);
+          ticking = true;
+          setTimeout(() => { ticking = false; }, 16); // ~60fps
+        }
+      }
 
-      // Слушаем изменение размера окна
+      window.addEventListener('scroll', requestTick);
       window.addEventListener('resize', toggleMobileBookingButton);
     }
 

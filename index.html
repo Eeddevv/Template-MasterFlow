@@ -1,0 +1,1705 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <style>
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+
+  <script>tailwind.config = {
+      "theme": {
+        "extend": {
+          "fontFamily": {
+            "montserrat": [
+              "Montserrat",
+              "sans-serif"
+            ],
+            "sans": [
+              "Inter",
+              "sans-serif"
+            ]
+          },
+          "colors": {
+            "primary": "#d4a7b1",
+            "primary-dark": "#b88e97",
+            "secondary": "#f5e6e8"
+          }
+        }
+      }
+    };</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&amp;display=swap">
+  <style>
+    body {
+      scroll-behavior: smooth;
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    /* Preserve Font Awesome icons */
+    .fa,
+    .fas,
+    .far,
+    .fal,
+    .fab {
+      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+    }
+  </style>
+  <style>
+    .highlighted-section {
+      outline: 2px solid #3F20FB;
+      background-color: rgba(63, 32, 251, 0.1);
+    }
+
+    .edit-button {
+      position: absolute;
+      z-index: 1000;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    html,
+    body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Анимация для аккордиона FAQ */
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease-out;
+    }
+
+    .faq-content.open {
+      max-height: 500px;
+      transition: max-height 0.25s ease-in;
+    }
+
+    /* Кастомный скроллбар для выпадающих списков */
+    .custom-dropdown-list {
+      scrollbar-width: thin;
+      scrollbar-color: #d4a7b1 #f3f4f6;
+    }
+
+    .custom-dropdown-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-dropdown-list::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 3px;
+    }
+
+    .custom-dropdown-list::-webkit-scrollbar-thumb {
+      background: #d4a7b1;
+      border-radius: 3px;
+      transition: background 0.2s ease;
+    }
+
+    .custom-dropdown-list::-webkit-scrollbar-thumb:hover {
+      background: #b88e97;
+    }
+
+    /* Оверлей для затемнения */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Стили для мобильного меню */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 50vw;
+      min-width: 300px;
+      max-width: 420px;
+      height: 100vh;
+      background: white;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+      transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    /* Адаптация для очень маленьких экранов */
+    @media (max-width: 480px) {
+      .mobile-menu {
+        width: 75vw;
+        min-width: 280px;
+        right: -80%;
+      }
+    }
+
+    .mobile-menu.open {
+      right: 0;
+    }
+
+    /* Скрыть на больших экранах */
+    @media (min-width: 768px) {
+
+      .mobile-menu-overlay,
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* Анимация бургер-иконки */
+    .burger-icon {
+      display: flex;
+      flex-direction: column;
+      width: 24px;
+      height: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .burger-line {
+      width: 100%;
+      height: 2px;
+      background: #374151;
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    .burger-icon.open .burger-line:first-child {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .burger-icon.open .burger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger-icon.open .burger-line:last-child {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* Анимация появления пунктов меню */
+    .mobile-nav-item {
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-menu.open .mobile-nav-item {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .mobile-menu.open .mobile-nav-item:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .mobile-menu.open .mobile-nav-item:nth-child(2) {
+      transition-delay: 0.15s;
+    }
+
+    .mobile-menu.open .mobile-nav-item:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .mobile-menu.open .mobile-nav-item:nth-child(4) {
+      transition-delay: 0.25s;
+    }
+
+    .mobile-menu.open .mobile-nav-item:nth-child(5) {
+      transition-delay: 0.3s;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <!-- Навигация -->
+  <header id="header" class="bg-white py-4 px-4 md:px-8 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="text-xl font-semibold text-primary">НейлАрт</div>
+      <nav class="hidden md:flex space-x-6">
+        <span class="hover:text-primary transition cursor-pointer"
+          onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">О мастере</span>
+        <span class="hover:text-primary transition cursor-pointer"
+          onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' });">Услуги</span>
+        <span class="hover:text-primary transition cursor-pointer"
+          onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });">Портфолио</span>
+        <span class="hover:text-primary transition cursor-pointer"
+          onclick="document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });">Отзывы</span>
+        <span class="hover:text-primary transition cursor-pointer"
+          onclick="document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });">Запись</span>
+        <span onclick="document.getElementById('contacts').scrollIntoView({ behavior: 'smooth' });"
+          class="hover:text-primary transition cursor-pointer">Контакты</span>
+      </nav>
+      <span onclick="document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });"
+        class="hidden md:block bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-full transition cursor-pointer">Записаться</span>
+      <button id="mobileMenuToggle" class="md:hidden">
+        <div class="burger-icon">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </div>
+      </button>
+    </div>
+  </header>
+
+  <!-- Оверлей для мобильного меню -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+
+  <!-- Мобильное меню -->
+  <div id="mobileMenu" class="mobile-menu">
+    <!-- Заголовок меню -->
+    <div class="p-6 border-b border-gray-200">
+      <div class="flex justify-between items-center">
+        <div class="text-xl font-semibold text-primary">НейлАрт</div>
+        <button id="closeMobileMenu" class="text-gray-500 hover:text-gray-700">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Навигационные пункты -->
+    <nav class="py-4 flex-1">
+      <div class="space-y-1">
+        <a href="#about" onclick="navigateToSection('about')"
+          class="mobile-nav-item flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+          <i class="fa-solid fa-user-tie w-5 text-center mr-3 text-primary"></i>
+          <span>О мастере</span>
+        </a>
+        <a href="#services" onclick="navigateToSection('services')"
+          class="mobile-nav-item flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+          <i class="fa-solid fa-hand-sparkles w-5 text-center mr-3 text-primary"></i>
+          <span>Услуги</span>
+        </a>
+        <a href="#portfolio" onclick="navigateToSection('portfolio')"
+          class="mobile-nav-item flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+          <i class="fa-solid fa-images w-5 text-center mr-3 text-primary"></i>
+          <span>Портфолио</span>
+        </a>
+        <a href="#reviews" onclick="navigateToSection('reviews')"
+          class="mobile-nav-item flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+          <i class="fa-solid fa-star w-5 text-center mr-3 text-primary"></i>
+          <span>Отзывы</span>
+        </a>
+        <a href="#contacts" onclick="navigateToSection('contacts')"
+          class="mobile-nav-item flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+          <i class="fa-solid fa-map-marker-alt w-5 text-center mr-3 text-primary"></i>
+          <span>Контакты</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Кнопка записаться -->
+    <div class="px-6 py-4 border-t border-gray-200">
+      <button onclick="navigateToSection('booking')"
+        class="w-full bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-full transition flex items-center justify-center">
+        <i class="fa-solid fa-calendar-check mr-2"></i>
+        Записаться онлайн
+      </button>
+    </div>
+
+    <!-- Социальные сети -->
+    <div class="px-6 py-4 border-t border-gray-200">
+      <p class="text-sm text-gray-500 mb-3">Мы в социальных сетях:</p>
+      <div class="flex space-x-4">
+        <a href="#"
+          class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="#"
+          class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition">
+          <i class="fa-brands fa-vk"></i>
+        </a>
+        <a href="#"
+          class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="#"
+          class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Контактная информация -->
+    <div class="px-6 py-4 border-t border-gray-200">
+      <div class="text-center text-sm text-gray-500">
+        <p class="mb-1">+7 (999) 123-45-67</p>
+        <p>elena@nailart.ru</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Главный блок -->
+  <section id="hero" class="bg-secondary py-16 md:py-24 min-h-[600px] flex items-center">
+    <div class="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 flex md:hidden justify-center">
+        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-lg">
+          <img class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/89491137d4-f4e93bfed198a0d3e360.png"
+            alt="professional female nail technician smiling, portrait photo, beauty salon, soft lighting, elegant">
+        </div>
+      </div>
+      <div class="md:w-1/2 mb-8 md:mb-0 md:mt-0 mt-5">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-center md:text-left">Елена Иванова</h1>
+        <h2 class="text-2xl md:text-3xl text-primary mb-6 text-center md:text-left">Мастер маникюра</h2>
+        <p class="text-lg mb-8 text-center md:text-left">Создаю безупречный маникюр с индивидуальным подходом к каждому
+          клиенту. Более 5 лет
+          опыта и сотни довольных клиентов.</p>
+        <div class="flex md:flex-row flex-col md:space-x-4 space-y-4 md:space-y-0">
+          <span onclick="document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });"
+            class="bg-primary text-center hover:bg-primary-dark text-white py-3 px-6 rounded-full transition cursor-pointer">Записаться
+            онлайн</span>
+          <span onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' });"
+            class="border border-primary text-center text-primary hover:bg-primary hover:text-white py-3 px-6 rounded-full transition cursor-pointer">Услуги
+            и цены</span>
+        </div>
+      </div>
+      <div class="md:w-1/2 hidden md:flex justify-center">
+        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-lg">
+          <img class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/89491137d4-f4e93bfed198a0d3e360.png"
+            alt="professional female nail technician smiling, portrait photo, beauty salon, soft lighting, elegant">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- О мастере -->
+  <section id="about" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">О мастере</h2>
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2">
+          <img class="w-full h-auto rounded-lg shadow-md"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1b67007bed-1a631f1b3423e035d219.png"
+            alt="nail technician working on client">
+        </div>
+        <div class="md:w-1/2">
+          <p class="mb-4">Привет! Меня зовут Елена, и я профессиональный мастер маникюра с опытом работы более 5 лет.
+          </p>
+          <p class="mb-4">Моя страсть к нейл-арту началась еще в подростковом возрасте, а профессиональное образование я
+            получила в престижной школе маникюра. Регулярно повышаю квалификацию, осваиваю новые техники и слежу за
+            трендами.</p>
+          <p class="mb-4">В моей работе я придерживаюсь нескольких принципов:</p>
+          <ul class="list-disc pl-5 mb-6">
+            <li class="mb-2">Стерильность и безопасность на первом месте</li>
+            <li class="mb-2">Использование только качественных материалов</li>
+            <li class="mb-2">Индивидуальный подход к каждому клиенту</li>
+            <li>Постоянное совершенствование навыков</li>
+          </ul>
+          <div class="flex space-x-4">
+            <span class="text-gray-600 hover:text-primary transition cursor-pointer" target="_blank">
+              <i class="fa-brands fa-instagram text-2xl"></i>
+            </span>
+            <span class="text-gray-600 hover:text-primary transition cursor-pointer" target="_blank">
+              <i class="fa-brands fa-vk text-2xl"></i>
+            </span>
+            <span class="text-gray-600 hover:text-primary transition cursor-pointer" target="_blank">
+              <i class="fa-brands fa-telegram text-2xl"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Услуги и цены -->
+  <section id="services" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Услуги и цены</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Услуга 1 -->
+        <div id="service-1" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Маникюр + гель-лак</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">1500 ₽</span>
+          <p class="text-gray-600 mb-4">Обработка кутикулы, придание формы ногтям, покрытие гель-лаком в один тон.</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: 1.5 часа</span>
+          </div>
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('manicure', 'Маникюр + гель-лак')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+
+        <!-- Услуга 2 -->
+        <div id="service-2" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Маникюр + укрепление</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">1800 ₽</span>
+          <p class="text-gray-600 mb-4">Обработка кутикулы, придание формы ногтям, укрепление базой, покрытие
+            гель-лаком.</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: 2 часа</span>
+          </div>
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('strengthening', 'Маникюр + укрепление')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+
+        <!-- Услуга 3 -->
+        <div id="service-3" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Наращивание ногтей</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">2500 ₽</span>
+          <p class="text-gray-600 mb-4">Наращивание ногтей гелем, придание формы, покрытие гель-лаком в один тон.</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: 2.5 часа</span>
+          </div>
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('extension', 'Наращивание ногтей')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+
+        <!-- Услуга 4 -->
+        <div id="service-4" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Дизайн ногтей</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">от 200 ₽</span>
+          <p class="text-gray-600 mb-4">Нанесение рисунков, стразы, втирка, фольга и другие виды дизайна (цена за 1
+            ноготь).</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: от 15 мин</span>
+          </div>
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('design', 'Дизайн ногтей')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+
+        <!-- Услуга 5 -->
+        <div id="service-5" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Снятие гель-лака</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">300 ₽</span>
+          <p class="text-gray-600 mb-4">Бережное снятие гель-лака с использованием специальных средств.</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: 30 мин</span>
+          </div>
+
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('removal', 'Снятие гель-лака')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+
+        <!-- Услуга 6 -->
+        <div id="service-6" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold">Ремонт ногтя</h3>
+          </div>
+          <span class="text-primary font-bold mb-3 flex">300 ₽</span>
+          <p class="text-gray-600 mb-4">Ремонт сломанного ногтя, восстановление покрытия (цена за 1 ноготь).</p>
+          <div class="flex items-center text-gray-500">
+            <i class="fa-regular fa-clock mr-2"></i>
+            <span>Длительность: 20 мин</span>
+          </div>
+          <div class="text-center mt-5 w-[100%] mx-auto">
+            <span onclick="bookService('repair', 'Ремонт ногтя')"
+              class="bg-primary flex justify-center items-center hover:bg-primary-dark text-white py-3 px-6 rounded-full inline-block transition cursor-pointer">Записаться
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как проходит процедура -->
+  <section id="process" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Как проходит процедура</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Шаг 1 -->
+        <div id="step-1" class="text-center">
+          <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-primary text-2xl font-bold">1</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Запись</h3>
+          <p class="text-gray-600">Выберите удобное время и запишитесь онлайн или по телефону. Я подтвержу вашу запись.
+          </p>
+        </div>
+
+        <!-- Шаг 2 -->
+        <div id="step-2" class="text-center">
+          <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-primary text-2xl font-bold">2</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Консультация</h3>
+          <p class="text-gray-600">Мы обсудим желаемый дизайн, состояние ваших ногтей и подберем оптимальное решение.
+          </p>
+        </div>
+
+        <!-- Шаг 3 -->
+        <div id="step-3" class="text-center">
+          <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-primary text-2xl font-bold">3</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Процедура</h3>
+          <p class="text-gray-600">Выполнение маникюра с использованием стерильных инструментов и качественных
+            материалов.</p>
+        </div>
+      </div>
+      <div class="flex justify-center mt-12">
+        <span onclick="document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });"
+          class="bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-full transition cursor-pointer">Записаться
+          сейчас</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Портфолио -->
+  <section id="portfolio" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Мои работы</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(0)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
+            alt="elegant nail art design, pink and white, minimalist, professional manicure">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(1)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4b20df5755-f4cba5079cdd49ba848a.png"
+            alt="french manicure with glitter accents, professional nail art, elegant">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(2)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/912fe092aa-59a0e2097d27d2c74a0c.png"
+            alt="geometric nail art design, modern manicure, pastel colors">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(3)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7e202139c5-460f83146aad50502e09.png"
+            alt="red nail polish manicure, glossy finish, professional nail art">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(4)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/520e711e2e-db634638ea5591075553.png"
+            alt="nail art with rhinestones, luxury manicure design, professional">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(5)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e0c40946c9-6baa85e9cd3b3bb65ccb.png"
+            alt="ombre nail design, gradient manicure, soft pastel colors">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(6)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d1bd03bf65-27d855048074eccbe86b.png"
+            alt="minimalist nail art, simple elegant manicure, nude colors">
+        </div>
+        <div class="aspect-square overflow-hidden rounded-lg cursor-pointer" onclick="openPortfolioModal(7)">
+          <img class="w-full h-full object-cover hover:scale-105 transition"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/533f66de41-ab6a6f18ad0412963048.png"
+            alt="floral nail art design, spring manicure, delicate pattern">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- До/После -->
+  <section id="before-after" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">До и После</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Пример 1 -->
+        <div id="before-after-1" class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-1/2">
+              <p class="text-center font-semibold mb-2">До</p>
+              <img class="w-full h-auto rounded-lg"
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b18b4b5fe6-da42fc877345fdb9983d.png"
+                alt="damaged nails before manicure, close-up, natural lighting">
+            </div>
+            <div class="md:w-1/2">
+              <p class="text-center font-semibold mb-2">После</p>
+              <img class="w-full h-auto rounded-lg"
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2b96ca39e3-cddd6d08b4d2cd03ae30.png"
+                alt="same nails after professional manicure, beautiful design, healthy looking">
+            </div>
+          </div>
+          <p class="mt-3 text-gray-600 text-center">Восстановление ногтевой пластины и красивое покрытие</p>
+        </div>
+
+        <!-- Пример 2 -->
+        <div id="before-after-2" class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-1/2">
+              <p class="text-center font-semibold mb-2">До</p>
+              <img class="w-full h-auto rounded-lg"
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e9cbe341e6-0114e6be11e4d12c5d29.png"
+                alt="short bitten nails before treatment, close-up, natural lighting">
+            </div>
+            <div class="md:w-1/2">
+              <p class="text-center font-semibold mb-2">После</p>
+              <img class="w-full h-auto rounded-lg"
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/60e87a44ca-b2e5fc301d59834cb5c6.png"
+                alt="same nails after extension and professional manicure, elegant design">
+            </div>
+          </div>
+          <p class="mt-3 text-gray-600 text-center">Наращивание и дизайн ногтей</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Сертификаты -->
+  <section id="certificates" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Сертификаты и дипломы</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+          <img class="w-full h-auto rounded-lg"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/fe0ee6e17c-01e1416c0f0c4d82b318.png"
+            alt="nail technician diploma certificate, professional education document, beauty industry">
+          <p class="mt-3 text-center font-medium">Сертификат мастера маникюра</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+          <img class="w-full h-auto rounded-lg"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bfc525fa7f-014711b9135eb181e186.png"
+            alt="nail art advanced techniques certificate, professional education document">
+          <p class="mt-3 text-center font-medium">Курс повышения квалификации</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+          <img class="w-full h-auto rounded-lg"
+            src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7de69b823f-dab787ed236a34c61e91.png"
+            alt="nail design masterclass certificate, professional education document">
+          <p class="mt-3 text-center font-medium">Мастер-класс по дизайну</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section id="reviews" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Отзывы клиентов</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Отзыв 1 -->
+        <div id="review-1" class="bg-gray-50 p-6 rounded-lg">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 flex">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="ml-2 text-gray-600">5.0</span>
+          </div>
+          <p class="text-gray-700 mb-4">"Елена - настоящий профессионал! Делаю маникюр только у нее уже больше года.
+            Всегда стерильно, аккуратно и красиво. Очень довольна результатом каждый раз!"</p>
+          <div class="flex items-center">
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Клиент"
+              class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <p class="font-medium">Анна К.</p>
+              <p class="text-sm text-gray-500">Постоянный клиент</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Отзыв 2 -->
+        <div id="review-2" class="bg-gray-50 p-6 rounded-lg">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 flex">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="ml-2 text-gray-600">5.0</span>
+          </div>
+          <p class="text-gray-700 mb-4">"Очень рада, что нашла такого хорошего мастера! Елена всегда предлагает
+            интересные дизайны и выполняет работу безупречно. Маникюр держится долго, а руки выглядят ухоженно."</p>
+          <div class="flex items-center">
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Клиент"
+              class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <p class="font-medium">Мария С.</p>
+              <p class="text-sm text-gray-500">Клиент</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Отзыв 3 -->
+        <div id="review-3" class="bg-gray-50 p-6 rounded-lg">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 flex">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-alt"></i>
+            </div>
+            <span class="ml-2 text-gray-600">4.5</span>
+          </div>
+          <p class="text-gray-700 mb-4">"Хожу к Елене уже полгода и всегда довольна результатом. Очень внимательный
+            мастер, учитывает все пожелания. Приятная атмосфера и профессиональный подход."</p>
+          <div class="flex items-center">
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Клиент"
+              class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <p class="font-medium">Ольга В.</p>
+              <p class="text-sm text-gray-500">Клиент</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <span class="inline-flex items-center text-primary hover:text-primary-dark transition cursor-pointer"
+          target="_blank">
+          <span>Смотреть все отзывы на Яндекс.Картах</span>
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Популярные вопросы -->
+  <section id="faq" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Популярные вопросы</h2>
+      <div class="space-y-4 max-w-3xl mx-auto">
+        <!-- Вопрос 1 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <button onclick="toggleFAQ(1)"
+            class="w-full text-left p-6 flex justify-between items-center hover:bg-primary hover:text-white transition-all duration-200 group">
+            <h3 class="text-xl font-semibold">Как долго держится гель-лак?</h3>
+            <i id="faq-icon-1"
+              class="fa-solid fa-chevron-down transition-transform duration-200 text-primary group-hover:text-white"></i>
+          </button>
+          <div id="faq-answer-1" class="faq-content">
+            <div class="px-6 pb-6 py-2  ">
+              <p class="text-gray-600">При правильном нанесении и соблюдении рекомендаций гель-лак держится 2-3 недели
+                без
+                сколов и отслоек. Срок носки зависит от индивидуальных особенностей ногтей и образа жизни.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вопрос 2 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <button onclick="toggleFAQ(2)"
+            class="w-full text-left p-6 flex justify-between items-center hover:bg-primary hover:text-white transition-all duration-200 group">
+            <h3 class="text-xl font-semibold">Безопасно ли наращивание ногтей?</h3>
+            <i id="faq-icon-2"
+              class="fa-solid fa-chevron-down transition-transform duration-200 text-primary group-hover:text-white"></i>
+          </button>
+          <div id="faq-answer-2" class="faq-content">
+            <div class="px-6 pb-6 py-2">
+              <p class="text-gray-600">Да, при выполнении процедуры профессионалом наращивание безопасно. Я использую
+                качественные материалы и соблюдаю технологию, что минимизирует риск повреждения натуральных ногтей.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вопрос 3 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <button onclick="toggleFAQ(3)"
+            class="w-full text-left p-6 flex justify-between items-center hover:bg-primary hover:text-white transition-all duration-200 group">
+            <h3 class="text-xl font-semibold">Что делать, если скололся ноготь?</h3>
+            <i id="faq-icon-3"
+              class="fa-solid fa-chevron-down transition-transform duration-200 text-primary group-hover:text-white"></i>
+          </button>
+          <div id="faq-answer-3" class="faq-content">
+            <div class="px-6 pb-6 py-2">
+              <p class="text-gray-600">Не пытайтесь исправить скол самостоятельно. Свяжитесь со мной, и я запишу вас на
+                ремонт ногтя. Обычно это занимает не более 20 минут и стоит 300 рублей за один ноготь.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вопрос 4 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <button onclick="toggleFAQ(4)"
+            class="w-full text-left p-6 flex justify-between items-center hover:bg-primary hover:text-white transition-all duration-200 group">
+            <h3 class="text-xl font-semibold">Как часто нужно делать коррекцию?</h3>
+            <i id="faq-icon-4"
+              class="fa-solid fa-chevron-down transition-transform duration-200 text-primary group-hover:text-white"></i>
+          </button>
+          <div id="faq-answer-4" class="faq-content">
+            <div class="px-6 pb-6 py-2">
+              <p class="text-gray-600">Рекомендую делать коррекцию каждые 2-3 недели. Это позволит поддерживать ногти в
+                идеальном состоянии и предотвратить возможные проблемы из-за отросшей части.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Онлайн запись -->
+  <section id="booking" class="py-16 bg-secondary">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Онлайн запись</h2>
+      <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+        <form id="bookingForm" novalidate>
+          <!-- Имя -->
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 mb-2">Ваше имя *</label>
+            <input type="text" id="name" name="name" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition">
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+
+          <!-- Telegram -->
+          <div class="mb-4">
+            <label for="telegram" class="block text-gray-700 mb-2">Telegram *</label>
+            <input type="text" id="telegram" name="telegram" required placeholder="@username или ссылка"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition">
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+
+          <!-- Услуга -->
+          <div class="mb-4">
+            <label for="service" class="block text-gray-700 mb-2">Выберите услугу *</label>
+            <div class="relative">
+              <div id="serviceDropdown"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex justify-between items-center">
+                <span id="serviceSelected" class="text-gray-500">Выберите услугу</span>
+                <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+              </div>
+              <div id="serviceList"
+                class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto hidden custom-dropdown-list">
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="manicure"
+                  data-name="Маникюр + гель-лак">Маникюр + гель-лак</div>
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="strengthening"
+                  data-name="Маникюр + укрепление">Маникюр + укрепление</div>
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="extension"
+                  data-name="Наращивание ногтей">Наращивание ногтей</div>
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="design"
+                  data-name="Дизайн ногтей">Дизайн ногтей</div>
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="removal"
+                  data-name="Снятие гель-лака">Снятие гель-лака</div>
+                <div class="service-option p-3 hover:bg-gray-50 cursor-pointer" data-value="repair"
+                  data-name="Ремонт ногтя">Ремонт ногтя</div>
+              </div>
+            </div>
+            <input type="hidden" id="service" name="service" required>
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+
+          <!-- Дата -->
+          <div class="mb-4">
+            <label for="date" class="block text-gray-700 mb-2">Дата *</label>
+            <div class="relative">
+              <div id="dateDropdown"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex justify-between items-center">
+                <span id="dateSelected" class="text-gray-500">Выберите дату</span>
+                <i class="fa-solid fa-calendar-days"></i>
+              </div>
+              <div id="dateList"
+                class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto hidden custom-dropdown-list">
+                <!-- Даты будут добавлены динамически -->
+              </div>
+            </div>
+            <input type="hidden" id="date" name="date" required>
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+
+          <!-- Время -->
+          <div class="mb-6">
+            <label for="time" class="block text-gray-700 mb-2">Время *</label>
+            <div class="relative">
+              <div id="timeDropdown"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex justify-between items-center">
+                <span id="timeSelected" class="text-gray-500">Выберите время</span>
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div id="timeList"
+                class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto hidden custom-dropdown-list">
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="09:00">09:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="09:30">09:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="10:00">10:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="10:30">10:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="11:00">11:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="11:30">11:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="12:00">12:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="12:30">12:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="13:00">13:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="13:30">13:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="14:00">14:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="14:30">14:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="15:00">15:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="15:30">15:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="16:00">16:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="16:30">16:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="17:00">17:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="17:30">17:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="18:00">18:00</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="18:30">18:30</div>
+                <div class="time-option p-3 hover:bg-gray-50 cursor-pointer" data-value="19:00">19:00</div>
+              </div>
+            </div>
+            <input type="hidden" id="time" name="time" required>
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg transition">Записаться</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты и карта -->
+  <section id="contacts" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center">Контакты</h2>
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="md:w-1/2">
+          <div class="bg-gray-50 p-6 rounded-lg h-full">
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <i class="fa-solid fa-location-dot text-primary text-xl mt-1 mr-4"></i>
+                <div>
+                  <h3 class="font-semibold mb-1">Адрес</h3>
+                  <p class="text-gray-600">г. Москва, ул. Примерная, д. 123, офис 45</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <i class="fa-solid fa-phone text-primary text-xl mt-1 mr-4"></i>
+                <div>
+                  <h3 class="font-semibold mb-1">Телефон</h3>
+                  <p class="text-gray-600">+7 (999) 123-45-67</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <i class="fa-solid fa-envelope text-primary text-xl mt-1 mr-4"></i>
+                <div>
+                  <h3 class="font-semibold mb-1">Email</h3>
+                  <p class="text-gray-600">elena@nailart.ru</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <i class="fa-brands fa-instagram text-primary text-xl mt-1 mr-4"></i>
+                <div>
+                  <h3 class="font-semibold mb-1">Instagram</h3>
+                  <p class="text-gray-600">@elena_nailart</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2">
+          <div class="h-80 bg-gray-200 rounded-lg overflow-hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.347095072054!2d37.617676!3d55.755826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a50b315e573%3A0xa886bf5a3d9b2e68!2z0JzQvtGB0LrQvtCy0YHQutC40Lkg0JrRgNC10LzQu9GM!5e0!3m2!1sru!2sru!4v1635773283695!5m2!1sru!2sru"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer id="footer" class="bg-gray-900 text-white py-10 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-xl font-semibold text-primary mb-2">Елена Иванова</h3>
+          <p class="text-gray-400">Профессиональный мастер маникюра</p>
+        </div>
+        <div class="flex space-x-4">
+          <span class="text-gray-400 hover:text-primary transition cursor-pointer" target="_blank">
+            <i class="fa-brands fa-instagram text-2xl"></i>
+          </span>
+          <span class="text-gray-400 hover:text-primary transition cursor-pointer" target="_blank">
+            <i class="fa-brands fa-vk text-2xl"></i>
+          </span>
+          <span class="text-gray-400 hover:text-primary transition cursor-pointer" target="_blank">
+            <i class="fa-brands fa-telegram text-2xl"></i>
+          </span>
+          <span class="text-gray-400 hover:text-primary transition cursor-pointer" target="_blank">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+          </span>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400 text-sm">
+        <p>© 2023 Елена Иванова. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Модальное окно портфолио -->
+  <div id="portfolioModal"
+    class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <!-- Кнопка закрытия -->
+      <button onclick="closePortfolioModal()"
+        class="absolute top-4 right-4 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center transition">
+        <i class="fa-solid fa-times text-xl text-gray-700"></i>
+      </button>
+
+      <!-- Слайдер -->
+      <div class="relative">
+        <!-- Изображение -->
+        <div class="w-full max-h-[70vh] overflow-hidden flex items-center justify-center bg-gray-100 relative">
+          <img id="modalImage" class="w-full h-auto max-h-[70vh] object-cover" src="" alt="">
+
+          <!-- Кнопки навигации поверх изображения -->
+          <button onclick="previousImage()"
+            class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-12 h-12 flex items-center justify-center transition">
+            <i class="fa-solid fa-chevron-left text-xl text-gray-700"></i>
+          </button>
+          <button onclick="nextImage()"
+            class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-12 h-12 flex items-center justify-center transition">
+            <i class="fa-solid fa-chevron-right text-xl text-gray-700"></i>
+          </button>
+
+          <!-- Индикаторы -->
+          <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(0)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(1)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(2)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(3)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(4)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(5)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(6)"></span>
+            <span class="portfolio-indicator w-2 h-2 bg-white bg-opacity-50 rounded-full cursor-pointer transition"
+              onclick="goToImage(7)"></span>
+          </div>
+        </div>
+
+        <!-- Описание под фоткой -->
+        <div class="bg-white p-4 border-t border-gray-200">
+          <p id="modalDescription" class="text-gray-600 text-center"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Модальное окно подтверждения записи -->
+  <div id="confirmationModal"
+    class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-lg max-w-md w-full p-8 text-center">
+      <div class="mb-6">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-check text-green-500 text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">Заявка отправлена!</h3>
+        <p class="text-gray-600">Мы свяжемся с вами в Telegram для подтверждения записи в ближайшее время.</p>
+      </div>
+      <div class="border-t pt-4">
+        <p class="text-sm text-gray-500 mb-4">Ваши данные:</p>
+        <div class="bg-gray-50 rounded-lg p-4 text-left text-sm space-y-2">
+          <div><strong>Имя:</strong> <span id="confirmName"></span></div>
+          <div><strong>Telegram:</strong> <span id="confirmTelegram"></span></div>
+          <div><strong>Услуга:</strong> <span id="confirmService"></span></div>
+          <div><strong>Дата:</strong> <span id="confirmDate"></span></div>
+          <div><strong>Время:</strong> <span id="confirmTime"></span></div>
+        </div>
+      </div>
+      <button onclick="closeConfirmationModal()"
+        class="w-full bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg transition mt-6">
+        Закрыть
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Данные портфолио
+    const portfolioData = [
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png",
+        alt: "elegant nail art design, pink and white, minimalist, professional manicure",
+        description: "Элегантный дизайн в розово-белых тонах с минималистичным подходом"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/4b20df5755-f4cba5079cdd49ba848a.png",
+        alt: "french manicure with glitter accents, professional nail art, elegant",
+        description: "Французский маникюр с блестящими акцентами"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/912fe092aa-59a0e2097d27d2c74a0c.png",
+        alt: "geometric nail art design, modern manicure, pastel colors",
+        description: "Геометрический дизайн в пастельных тонах"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/7e202139c5-460f83146aad50502e09.png",
+        alt: "red nail polish manicure, glossy finish, professional nail art",
+        description: "Классический красный маникюр с глянцевым покрытием"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/520e711e2e-db634638ea5591075553.png",
+        alt: "nail art with rhinestones, luxury manicure design, professional",
+        description: "Роскошный дизайн со стразами"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/e0c40946c9-6baa85e9cd3b3bb65ccb.png",
+        alt: "ombre nail design, gradient manicure, soft pastel colors",
+        description: "Градиентный дизайн омбре в мягких пастельных тонах"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/d1bd03bf65-27d855048074eccbe86b.png",
+        alt: "minimalist nail art, simple elegant manicure, nude colors",
+        description: "Минималистичный дизайн в нюдовых тонах"
+      },
+      {
+        src: "https://storage.googleapis.com/uxpilot-auth.appspot.com/533f66de41-ab6a6f18ad0412963048.png",
+        alt: "floral nail art design, spring manicure, delicate pattern",
+        description: "Нежный цветочный дизайн для весеннего настроения"
+      }
+    ];
+
+    let currentImageIndex = 0;
+
+    // Открытие модального окна
+    function openPortfolioModal(index) {
+      currentImageIndex = index;
+      updateModalContent();
+      document.getElementById('portfolioModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Закрытие модального окна
+    function closePortfolioModal() {
+      document.getElementById('portfolioModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Предыдущее изображение
+    function previousImage() {
+      currentImageIndex = currentImageIndex === 0 ? portfolioData.length - 1 : currentImageIndex - 1;
+      updateModalContent();
+    }
+
+    // Следующее изображение
+    function nextImage() {
+      currentImageIndex = currentImageIndex === portfolioData.length - 1 ? 0 : currentImageIndex + 1;
+      updateModalContent();
+    }
+
+    // Переход к конкретному изображению
+    function goToImage(index) {
+      currentImageIndex = index;
+      updateModalContent();
+    }
+
+    // Обновление содержимого модального окна
+    function updateModalContent() {
+      const currentImage = portfolioData[currentImageIndex];
+      document.getElementById('modalImage').src = currentImage.src;
+      document.getElementById('modalImage').alt = currentImage.alt;
+      document.getElementById('modalDescription').textContent = currentImage.description;
+
+      // Обновление индикаторов
+      const indicators = document.querySelectorAll('.portfolio-indicator');
+      indicators.forEach((indicator, index) => {
+        if (index === currentImageIndex) {
+          indicator.classList.remove('bg-opacity-50');
+          indicator.classList.add('bg-opacity-100');
+        } else {
+          indicator.classList.remove('bg-opacity-100');
+          indicator.classList.add('bg-opacity-50');
+        }
+      });
+    }
+
+    // Закрытие по клику на фон
+    document.getElementById('portfolioModal').addEventListener('click', function (e) {
+      if (e.target === this) {
+        closePortfolioModal();
+      }
+    });
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !document.getElementById('portfolioModal').classList.contains('hidden')) {
+        closePortfolioModal();
+      }
+      // Навигация стрелками
+      if (!document.getElementById('portfolioModal').classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft') {
+          previousImage();
+        } else if (e.key === 'ArrowRight') {
+          nextImage();
+        }
+      }
+    });
+
+    // Функция для аккордиона FAQ
+    function toggleFAQ(faqNumber) {
+      const answer = document.getElementById(`faq-answer-${faqNumber}`);
+      const icon = document.getElementById(`faq-icon-${faqNumber}`);
+
+      if (answer.classList.contains('open')) {
+        // Закрываем ответ
+        answer.classList.remove('open');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        // Открываем ответ
+        answer.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // === BOOKING FORM FUNCTIONALITY ===
+
+    // Функция для автозаполнения услуги из карточки
+    function bookService(serviceValue, serviceName) {
+      // Устанавливаем выбранную услугу
+      document.getElementById('service').value = serviceValue;
+      document.getElementById('serviceSelected').textContent = serviceName;
+      document.getElementById('serviceSelected').classList.remove('text-gray-500');
+      document.getElementById('serviceSelected').classList.add('text-gray-900');
+
+      // Прокручиваем к форме записи
+      document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+
+      // Фокусируем поле имени
+      setTimeout(() => {
+        document.getElementById('name').focus();
+      }, 500);
+    }
+
+    // Инициализация формы записи
+    document.addEventListener('DOMContentLoaded', function () {
+      initServiceDropdown();
+      initDateDropdown();
+      initTimeDropdown();
+      initFormValidation();
+      initMobileMenu();
+    });
+
+    // Инициализация выпадающего списка услуг
+    function initServiceDropdown() {
+      const dropdown = document.getElementById('serviceDropdown');
+      const list = document.getElementById('serviceList');
+      const selected = document.getElementById('serviceSelected');
+      const hiddenInput = document.getElementById('service');
+      const options = document.querySelectorAll('.service-option');
+
+      dropdown.addEventListener('click', function () {
+        list.classList.toggle('hidden');
+        const icon = dropdown.querySelector('i');
+        icon.style.transform = list.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+
+      options.forEach(option => {
+        option.addEventListener('click', function () {
+          const value = this.getAttribute('data-value');
+          const name = this.getAttribute('data-name');
+
+          hiddenInput.value = value;
+          selected.textContent = name;
+          selected.classList.remove('text-gray-500');
+          selected.classList.add('text-gray-900');
+          list.classList.add('hidden');
+
+          const icon = dropdown.querySelector('i');
+          icon.style.transform = 'rotate(0deg)';
+
+          clearFieldError('service');
+        });
+      });
+
+      // Закрытие при клике вне списка
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          list.classList.add('hidden');
+          const icon = dropdown.querySelector('i');
+          icon.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+
+    // Инициализация выпадающего списка дат
+    function initDateDropdown() {
+      const dropdown = document.getElementById('dateDropdown');
+      const list = document.getElementById('dateList');
+      const selected = document.getElementById('dateSelected');
+      const hiddenInput = document.getElementById('date');
+
+      // Генерируем даты на 30 дней вперед
+      generateDateOptions();
+
+      dropdown.addEventListener('click', function () {
+        list.classList.toggle('hidden');
+      });
+
+      // Закрытие при клике вне списка
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          list.classList.add('hidden');
+        }
+      });
+    }
+
+    // Генерация опций дат
+    function generateDateOptions() {
+      const list = document.getElementById('dateList');
+      const selected = document.getElementById('dateSelected');
+      const hiddenInput = document.getElementById('date');
+
+      list.innerHTML = '';
+
+      const today = new Date();
+      const dayNames = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+      const monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+      for (let i = 1; i <= 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+
+        // Пропускаем воскресенья (день = 0)
+        if (date.getDay() === 0) continue;
+
+        const dayName = dayNames[date.getDay()];
+        const day = date.getDate();
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+
+        const dateString = `${day}.${String(date.getMonth() + 1).padStart(2, '0')}.${year}`;
+        const displayText = `${dayName}, ${day} ${month}`;
+
+        const option = document.createElement('div');
+        option.className = 'p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0';
+        option.textContent = displayText;
+        option.setAttribute('data-value', dateString);
+
+        option.addEventListener('click', function () {
+          const value = this.getAttribute('data-value');
+          const text = this.textContent;
+
+          hiddenInput.value = value;
+          selected.textContent = text;
+          selected.classList.remove('text-gray-500');
+          selected.classList.add('text-gray-900');
+          list.classList.add('hidden');
+
+          clearFieldError('date');
+        });
+
+        list.appendChild(option);
+      }
+    }
+
+    // Инициализация выпадающего списка времени
+    function initTimeDropdown() {
+      const dropdown = document.getElementById('timeDropdown');
+      const list = document.getElementById('timeList');
+      const selected = document.getElementById('timeSelected');
+      const hiddenInput = document.getElementById('time');
+      const options = document.querySelectorAll('.time-option');
+
+      dropdown.addEventListener('click', function () {
+        list.classList.toggle('hidden');
+      });
+
+      options.forEach(option => {
+        option.addEventListener('click', function () {
+          const value = this.getAttribute('data-value');
+
+          hiddenInput.value = value;
+          selected.textContent = value;
+          selected.classList.remove('text-gray-500');
+          selected.classList.add('text-gray-900');
+          list.classList.add('hidden');
+
+          clearFieldError('time');
+        });
+      });
+
+      // Закрытие при клике вне списка
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          list.classList.add('hidden');
+        }
+      });
+    }
+
+    // Инициализация валидации формы
+    function initFormValidation() {
+      const form = document.getElementById('bookingForm');
+      const nameInput = document.getElementById('name');
+      const telegramInput = document.getElementById('telegram');
+
+      // Валидация в реальном времени
+      nameInput.addEventListener('input', function () {
+        validateName();
+      });
+
+      telegramInput.addEventListener('input', function () {
+        validateTelegram();
+      });
+
+      // Отправка формы
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (validateForm()) {
+          submitForm();
+        }
+      });
+    }
+
+    // Валидация имени
+    function validateName() {
+      const nameInput = document.getElementById('name');
+      const value = nameInput.value.trim();
+
+      if (value.length === 0) {
+        showFieldError('name', 'Пожалуйста, введите ваше имя');
+        return false;
+      } else if (value.length < 2) {
+        showFieldError('name', 'Имя должно содержать минимум 2 символа');
+        return false;
+      } else if (!/^[а-яё\s\-]+$/i.test(value)) {
+        showFieldError('name', 'Имя может содержать только русские буквы');
+        return false;
+      } else {
+        clearFieldError('name');
+        return true;
+      }
+    }
+
+    // Валидация Telegram
+    function validateTelegram() {
+      const telegramInput = document.getElementById('telegram');
+      const value = telegramInput.value.trim();
+
+      if (value.length === 0) {
+        showFieldError('telegram', 'Пожалуйста, укажите ваш Telegram');
+        return false;
+      } else if (!/^(@[\w\d_]{5,32}|https?:\/\/(t\.me|telegram\.me)\/[\w\d_]{5,32})$/i.test(value)) {
+        showFieldError('telegram', 'Введите @username или ссылку на профиль');
+        return false;
+      } else {
+        clearFieldError('telegram');
+        return true;
+      }
+    }
+
+    // Валидация всей формы
+    function validateForm() {
+      const isNameValid = validateName();
+      const isTelegramValid = validateTelegram();
+
+      const serviceValue = document.getElementById('service').value;
+      const dateValue = document.getElementById('date').value;
+      const timeValue = document.getElementById('time').value;
+
+      let isServiceValid = true;
+      let isDateValid = true;
+      let isTimeValid = true;
+
+      if (!serviceValue) {
+        showFieldError('service', 'Пожалуйста, выберите услугу');
+        isServiceValid = false;
+      }
+
+      if (!dateValue) {
+        showFieldError('date', 'Пожалуйста, выберите дату');
+        isDateValid = false;
+      }
+
+      if (!timeValue) {
+        showFieldError('time', 'Пожалуйста, выберите время');
+        isTimeValid = false;
+      }
+
+      return isNameValid && isTelegramValid && isServiceValid && isDateValid && isTimeValid;
+    }
+
+    // Показать ошибку поля
+    function showFieldError(fieldName, message) {
+      const field = document.getElementById(fieldName);
+      const errorDiv = field.parentNode.querySelector('.error-message');
+
+      field.classList.add('border-red-500');
+      field.classList.remove('border-gray-300');
+      errorDiv.textContent = message;
+      errorDiv.classList.remove('hidden');
+    }
+
+    // Очистить ошибку поля
+    function clearFieldError(fieldName) {
+      const field = document.getElementById(fieldName);
+      const errorDiv = field.parentNode.querySelector('.error-message');
+
+      field.classList.remove('border-red-500');
+      field.classList.add('border-gray-300');
+      errorDiv.classList.add('hidden');
+    }
+
+    // Отправка формы
+    function submitForm() {
+      const formData = {
+        name: document.getElementById('name').value.trim(),
+        telegram: document.getElementById('telegram').value.trim(),
+        service: document.getElementById('serviceSelected').textContent,
+        date: document.getElementById('dateSelected').textContent,
+        time: document.getElementById('timeSelected').textContent
+      };
+
+      // Заполняем данные в модальное окно подтверждения
+      document.getElementById('confirmName').textContent = formData.name;
+      document.getElementById('confirmTelegram').textContent = formData.telegram;
+      document.getElementById('confirmService').textContent = formData.service;
+      document.getElementById('confirmDate').textContent = formData.date;
+      document.getElementById('confirmTime').textContent = formData.time;
+
+      // Показываем модальное окно подтверждения
+      document.getElementById('confirmationModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      // Очищаем форму
+      resetForm();
+
+      // Здесь можно добавить отправку данных на сервер
+      console.log('Данные формы:', formData);
+    }
+
+    // Сброс формы
+    function resetForm() {
+      document.getElementById('bookingForm').reset();
+
+      // Сброс кастомных элементов
+      document.getElementById('serviceSelected').textContent = 'Выберите услугу';
+      document.getElementById('serviceSelected').classList.add('text-gray-500');
+      document.getElementById('serviceSelected').classList.remove('text-gray-900');
+
+      document.getElementById('dateSelected').textContent = 'Выберите дату';
+      document.getElementById('dateSelected').classList.add('text-gray-500');
+      document.getElementById('dateSelected').classList.remove('text-gray-900');
+
+      document.getElementById('timeSelected').textContent = 'Выберите время';
+      document.getElementById('timeSelected').classList.add('text-gray-500');
+      document.getElementById('timeSelected').classList.remove('text-gray-900');
+
+      // Очистка всех ошибок
+      const errorMessages = document.querySelectorAll('.error-message');
+      errorMessages.forEach(error => error.classList.add('hidden'));
+
+      const inputs = document.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-gray-300');
+      });
+    }
+
+    // Закрытие модального окна подтверждения
+    function closeConfirmationModal() {
+      document.getElementById('confirmationModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // === MOBILE MENU FUNCTIONALITY ===
+
+    function initMobileMenu() {
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const closeMobileMenu = document.getElementById('closeMobileMenu');
+      const burgerIcon = document.querySelector('.burger-icon');
+
+      // Открытие меню
+      mobileMenuToggle.addEventListener('click', function () {
+        mobileMenu.classList.add('open');
+        mobileMenuOverlay.classList.add('open');
+        burgerIcon.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      // Закрытие меню по кнопке
+      closeMobileMenu.addEventListener('click', function () {
+        closeMobileMenuFunction();
+      });
+
+      // Закрытие меню по клику на оверлей
+      mobileMenuOverlay.addEventListener('click', function () {
+        closeMobileMenuFunction();
+      });
+
+      // Закрытие меню по Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+          closeMobileMenuFunction();
+        }
+      });
+    }
+
+    // Функция закрытия мобильного меню
+    function closeMobileMenuFunction() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const burgerIcon = document.querySelector('.burger-icon');
+
+      mobileMenu.classList.remove('open');
+      mobileMenuOverlay.classList.remove('open');
+      burgerIcon.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Навигация по секциям из мобильного меню
+    function navigateToSection(sectionId) {
+      // Закрываем меню
+      closeMobileMenuFunction();
+
+      // Прокручиваем к секции с небольшой задержкой для плавности
+      setTimeout(() => {
+        document.getElementById(sectionId).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 300);
+    }
+
+  </script>
+
+</body>
+
+</html>

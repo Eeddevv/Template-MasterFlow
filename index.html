@@ -219,7 +219,7 @@
     /* Фиксированная кнопка записаться для мобильной версии */
     .mobile-booking-btn {
       position: fixed;
-      top: 0;
+      top: 68px;
       left: 0;
       right: 0;
       background: linear-gradient(135deg, #d4a7b1, #c7949c);
@@ -228,7 +228,7 @@
       text-align: center;
       font-weight: 600;
       font-size: 16px;
-      z-index: 51;
+      z-index: 49;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
       transform: translateY(-100%);
       transition: all 0.3s ease-in-out;
@@ -254,7 +254,7 @@
 
     /* Добавляем отступ для body когда кнопка видна */
     body.has-mobile-booking {
-      padding-top: 52px;
+      padding-top: var(--mobile-booking-offset, 120px);
     }
 
     @media (min-width: 768px) {
@@ -1412,13 +1412,20 @@
       function toggleMobileBookingButton() {
         const scrollY = window.scrollY;
         const headerHeight = header.offsetHeight;
+        const btnHeight = 52; // Высота кнопки
 
-        if (scrollY > headerHeight) {
+        // Обновляем позицию кнопки под шапкой
+        mobileBookingBtn.style.top = headerHeight + 'px';
+
+        if (scrollY > 50) { // Показываем после небольшого скролла
           mobileBookingBtn.classList.add('visible');
           document.body.classList.add('has-mobile-booking');
+          // Динамически рассчитываем отступ
+          document.body.style.setProperty('--mobile-booking-offset', (headerHeight + btnHeight) + 'px');
         } else {
           mobileBookingBtn.classList.remove('visible');
           document.body.classList.remove('has-mobile-booking');
+          document.body.style.removeProperty('--mobile-booking-offset');
         }
       }
 

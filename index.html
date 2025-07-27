@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>НейлАрт - Профессиональный маникюр и педикюр</title>
+  <meta name="description"
+    content="Профессиональные услуги маникюра и педикюра. Елена - мастер с опытом более 5 лет. Качественные материалы, стерильные инструменты, индивидуальный подход.">
+
+  <!-- Предзагрузка критических изображений портфолио -->
+  <link rel="preload" as="image" href="https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png">
+  <link rel="preload" as="image"
+    href="https://storage.googleapis.com/uxpilot-auth.appspot.com/4b20df5755-f4cba5079cdd49ba848a.png">
+
+  <!-- DNS prefetch для быстрой загрузки изображений -->
+  <link rel="dns-prefetch" href="//storage.googleapis.com">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"
@@ -121,40 +133,62 @@
     /* Дополнительные стили для мобильных устройств */
     @media (max-width: 768px) {
       .custom-dropdown-list {
-        scrollbar-width: auto;
+        scrollbar-width: auto !important;
         -webkit-overflow-scrolling: auto;
         /* Принудительно показываем скроллбар */
         overflow-y: scroll !important;
-        scrollbar-gutter: stable;
+        scrollbar-gutter: stable both-edges;
       }
 
       .custom-dropdown-list::-webkit-scrollbar {
-        width: 14px;
-        background-color: transparent;
+        width: 16px !important;
+        background-color: rgba(243, 244, 246, 0.3);
+        border-radius: 8px;
       }
 
       .custom-dropdown-list::-webkit-scrollbar-track {
-        background: rgba(243, 244, 246, 0.8);
+        background: rgba(243, 244, 246, 0.8) !important;
         border-radius: 8px;
         margin: 4px;
+        border: 1px solid rgba(229, 231, 235, 0.5);
       }
 
       .custom-dropdown-list::-webkit-scrollbar-thumb {
-        background: #d4a7b1;
-        border: 3px solid #f3f4f6;
+        background: #d4a7b1 !important;
+        border: 3px solid rgba(243, 244, 246, 0.8);
         border-radius: 8px;
-        min-height: 40px;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        min-height: 50px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .custom-dropdown-list::-webkit-scrollbar-thumb:hover {
+        background: #c7949c !important;
       }
 
       .custom-dropdown-list::-webkit-scrollbar-thumb:active {
-        background: #b88e97;
+        background: #b88e97 !important;
       }
     }
 
     /* Для всех браузеров - принудительное отображение скроллбара */
     .custom-dropdown-list {
-      scrollbar-gutter: stable;
+      scrollbar-gutter: stable both-edges;
+      /* Дополнительная принудительность для iOS Safari */
+      overflow-y: scroll !important;
+    }
+
+    /* Специально для iOS Safari */
+    @supports (-webkit-touch-callout: none) {
+      .custom-dropdown-list {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll !important;
+        scrollbar-width: auto !important;
+      }
+
+      .custom-dropdown-list::-webkit-scrollbar {
+        -webkit-appearance: none !important;
+        width: 16px !important;
+      }
     }
 
     /* Оверлей для затемнения */
@@ -185,6 +219,7 @@
       min-width: 300px;
       max-width: 420px;
       height: 100vh;
+      max-height: 100vh;
       background: white;
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
       transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -192,6 +227,33 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      overflow-x: hidden;
+      /* Принудительный скроллбар для мобильных */
+      scrollbar-width: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Кастомный скроллбар для мобильного меню */
+    .mobile-menu::-webkit-scrollbar {
+      width: 12px;
+      background-color: transparent;
+    }
+
+    .mobile-menu::-webkit-scrollbar-track {
+      background: rgba(243, 244, 246, 0.5);
+      border-radius: 6px;
+      margin: 8px 4px;
+    }
+
+    .mobile-menu::-webkit-scrollbar-thumb {
+      background: #d4a7b1;
+      border-radius: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      min-height: 40px;
+    }
+
+    .mobile-menu::-webkit-scrollbar-thumb:active {
+      background: #b88e97;
     }
 
     /* Адаптация для очень маленьких экранов */
@@ -831,7 +893,7 @@
             Всегда стерильно, аккуратно и красиво. Очень довольна результатом каждый раз!"</p>
           <div class="flex items-center">
             <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Клиент"
-              class="w-10 h-10 rounded-full mr-3">
+              class="w-10 h-10 rounded-full mr-3" loading="lazy">
             <div>
               <p class="font-medium">Анна К.</p>
               <p class="text-sm text-gray-500">Постоянный клиент</p>
@@ -855,7 +917,7 @@
             интересные дизайны и выполняет работу безупречно. Маникюр держится долго, а руки выглядят ухоженно."</p>
           <div class="flex items-center">
             <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Клиент"
-              class="w-10 h-10 rounded-full mr-3">
+              class="w-10 h-10 rounded-full mr-3" loading="lazy">
             <div>
               <p class="font-medium">Мария С.</p>
               <p class="text-sm text-gray-500">Клиент</p>
@@ -879,7 +941,7 @@
             мастер, учитывает все пожелания. Приятная атмосфера и профессиональный подход."</p>
           <div class="flex items-center">
             <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Клиент"
-              class="w-10 h-10 rounded-full mr-3">
+              class="w-10 h-10 rounded-full mr-3" loading="lazy">
             <div>
               <p class="font-medium">Ольга В.</p>
               <p class="text-sm text-gray-500">Клиент</p>
@@ -1427,14 +1489,18 @@
         // Гистерезис: разные пороги для появления и исчезновения
         const showThreshold = triggerPoint;
         const hideThreshold = triggerPoint - 50; // На 50px выше для предотвращения дрожания
+        const headerOverlapThreshold = headerHeight + 20; // Безопасная зона под шапкой
 
-        if (!isButtonVisible && scrollY > showThreshold) {
+        // Дополнительная проверка: никогда не показывать кнопку если мы близко к шапке
+        const isSafeToShow = scrollY > headerOverlapThreshold;
+
+        if (!isButtonVisible && scrollY > showThreshold && isSafeToShow) {
           // Показываем кнопку
           isButtonVisible = true;
           mobileBookingBtn.classList.add('visible');
           // Убираем динамический отступ body чтобы избежать дрожания
           // document.body.classList.add('has-mobile-booking');
-        } else if (isButtonVisible && scrollY < hideThreshold) {
+        } else if (isButtonVisible && (scrollY < hideThreshold || !isSafeToShow)) {
           // Скрываем кнопку
           isButtonVisible = false;
           mobileBookingBtn.classList.remove('visible');
@@ -1459,6 +1525,56 @@
       window.addEventListener('resize', toggleMobileBookingButton);
     }
 
+    // Функция предзагрузки изображений
+    function preloadImages() {
+      // Предзагружаем первые 3 изображения портфолио для быстрого отклика
+      const criticalImages = portfolioData.slice(0, 3);
+
+      criticalImages.forEach((imageData, index) => {
+        const img = new Image();
+        img.src = imageData.src;
+        // Можно добавить обработчики успешной загрузки если нужно
+        img.onload = () => {
+          console.log(`Preloaded portfolio image ${index + 1}`);
+        };
+      });
+    }
+
+    // Функция оптимизации всех изображений на странице
+    function optimizeImages() {
+      // Добавляем loading="lazy" ко всем изображениям портфолио
+      const portfolioImages = document.querySelectorAll('[onclick*="openPortfolioModal"] img');
+      portfolioImages.forEach(img => {
+        if (!img.hasAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+      });
+
+      // Добавляем intersection observer для лучшего контроля загрузки
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+              }
+            }
+          });
+        }, {
+          rootMargin: '50px 0px', // Начинаем загрузку за 50px до появления
+          threshold: 0.01
+        });
+
+        // Наблюдаем за всеми изображениями с data-src
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
+    }
+
     // Инициализация формы записи
     document.addEventListener('DOMContentLoaded', function () {
       initServiceDropdown();
@@ -1467,6 +1583,12 @@
       initFormValidation();
       initMobileMenu();
       initMobileBookingButton();
+
+      // Оптимизация изображений после загрузки DOM
+      setTimeout(() => {
+        preloadImages();
+        optimizeImages();
+      }, 100);
     });
 
     // Инициализация выпадающего списка услуг
